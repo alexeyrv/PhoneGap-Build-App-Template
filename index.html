@@ -1,5 +1,5 @@
 <!doctype html>
-<html manifest="manifest.appcache" lang="en"> 
+<html ng-app='myApp' manifest="manifest.appcache" lang="en"> 
 	<head> 
         <title>APPLICATION NAME</title> 
         
@@ -59,13 +59,165 @@
         <script type="application/javascript" src="js/angular.min.js"></script>
     </head> 
 
-    <body> 
+    <body ng-controller='TextController'>
         
         <div id="main" style="bgcolor:grey">
 		<h1>Angular test</h1> 
 		<hr>
 		<div id="app">
-			an app here
+
+
+<p>{{someText.message}}
+<input ng-model="someText.message">
+</p>
+
+<div style="border: 1px black solid; width:80%;">
+</br>
+<h3 align='center'> Task list </h3>
+
+<table width='90%'>
+<tr ng-repeat="task in tasks">
+	<td width='30%'> "{{task.name}}" </td>
+	<td>Type: {{task.type}} 
+	<br>
+	</td>
+	<td>Do: {{task.runtime}} </td>
+	<td>Minutes: {{task.duration}} </td>
+	<td>Priority: {{task.priority}} </td>
+	<td>Breakable: {{task.breakable}} </td>
+	<td>Status: {{task.status}} </td>
+	<td>From: {{task.startDt}} </td>
+	<td>To: {{task.endDt}} </td>
+	<td> <button ng-click='delete($index)'> Delete </button> </td>
+</tr>
+</table>
+
+</br>
+<p> Sum = {{sum}} </p>
+<p> All time = {{alltime}} </p>
+</div>
+
+<table width='70%'>
+<tr>
+	<td width='30%'>Task <br> <input ng-model="newtask.name"> </td>
+	<td>Type:  
+		<select data-ng-options="o.name for o in options" 
+		data-ng-model="selectedOption"></select>
+	</td>
+	<td>Do: <br> <input ng-model="newtask.runtime"> </td>
+	<td>Minutes: <br> <input ng-model="newtask.duration"> </td>
+</tr>
+<tr>
+	<td>Priority: <br> <input ng-model="newtask.priority"> </td>
+	<td>Breakable: <br> <input ng-model="newtask.breakable"> </td>
+	<td>Status: <br> <input ng-model="newtask.status"> </td>
+</tr>
+<tr>
+	<td>From: <br> <input ng-model="newtask.startDt"> </td>
+	<td>To: <br> <input ng-model="newtask.endDt"> </td>
+	<td> <button ng-click='add()'> Add</button> </td>
+</tr>
+</table>
+
+<!--
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js">
+</script>
+-->
+
+<script	src="js/angular.min.js">
+</script>
+	
+
+<script>
+
+var myAppModule = angular.module('myApp', []);
+
+myAppModule.controller('TextController',
+	function($scope) {
+	var someText = {};
+	someText.message = 'You have started your journey.';
+	$scope.someText = someText;
+
+	$scope.options = [{ name: "call", id: 1 }, { name: "meeting", id: 2 }];
+	$scope.selectedOption = $scope.options[0];
+
+	$scope.sum = 100;
+$scope.alltime = 1;
+
+	$scope.sumitems = function(){
+		$scope.sum = $scope.tasks.length;
+// ????	
+		$scope.alltime = 0;	
+		for( var i=0; i<$scope.tasks.length; i++ ){
+			$scope.alltime = +$scope.alltime + +$scope.tasks[i].duration;
+			//alert( i+1 + " : " + $scope.tasks[i].duration )
+		}
+	}
+
+
+	
+	$scope.$watch( 'tasks.length', $scope.sumitems );
+
+	$scope.delete = function( index ){
+		$scope.tasks.splice( index, 1 );
+	}
+
+
+	$scope.add = function( ){
+		//$scope.newtask.type = $scope.selectedOption.name;
+		$scope.tasks.push( 
+			{
+			name : $scope.newtask.name,
+			type : $scope.selectedOption.name,
+			duration : $scope.newtask.duration,
+			startDt : $scope.newtask.startDt,
+			endDt : $scope.newtask.endDt,
+			runtime : $scope.newtask.runtime,
+			priority : $scope.newtask.priority,
+			breakable : $scope.newtask.breakable,
+			responsible : $scope.newtask.responsible,
+			status : $scope.newtask.status 
+			}
+		)
+	}
+
+
+	var tasks = {};
+//	tasks.contacts = {};
+
+	tasks = [ 
+	{ name:"1st task",
+	type : "presentation",
+	duration : 80,
+	startDt : "2014-10-20 14:30",
+	endDt : "2014-10-20 18:45",
+	runtime : "any",
+	priority : "medium",
+	breakable : "no",
+	responsible : "me",
+	status : "in progress" },
+
+	{ name:"2nd task",
+	type : "call",
+	duration : 30,
+	startDt : "2014-10-22 11:30",
+	endDt : "2014-10-24 18:45",
+	runtime : "any",
+	priority : "low",
+	breakable : "no",
+	responsible : "me",
+	status : "in progress" }
+	]
+
+//	contacts.person = "Michael Kolov";
+//	contacts.conpany = "upeco";
+
+	$scope.tasks = tasks;
+
+});
+</script>
+
 		</div>
 
 
