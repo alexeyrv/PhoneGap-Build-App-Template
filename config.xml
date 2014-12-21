@@ -2,13 +2,13 @@
     <widget xmlns = "http://www.w3.org/ns/widgets" 
         xmlns:gap = "http://phonegap.com/ns/1.0"
 		id = "it.venerons.APPLICATION"
-		version = "1.0.0"
+		version = "0.0.2"
 		versionCode = "1">
 
-    <name>APPLICATION NAME</name>
+    <name>PH Build Angular</name>
 
     <description>
-        APPLICATION DESCRIPTION
+        APPLICATION ANGULAR for PG Build Test
     </description>
 
     <author href="http://venerons.github.io" email="veneronslaboratories@gmail.com">Daniele Veneroni</author>
